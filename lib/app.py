@@ -8,8 +8,8 @@ from peewee import *  # IMPORT ALL FROM peewee
 # PLAYHOUSE FROM PEEWEE AND MODEL TO DICT IS PRETTY MUCH SAYING TRANSLATE ANY MODELS TO OBJECTS OR DICTIONARIES(PYTHON)
 from playhouse.shortcuts import model_to_dict, dict_to_model
 from datetime import date
-db = PostgresqlData('people', user='poowoo',
-                    password='123456', host='localhost', port=5432)
+db = PostgresqlDatabase('people', user='poowoo',
+                        password='123456', host='localhost', port=5432)
 # connectiing to my postgress db named ppl with this information and port is Postgres defualt port I believe.
 
 
