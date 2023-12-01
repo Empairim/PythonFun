@@ -27,7 +27,7 @@ class Person(BaseModel):
 
 
 db.connect()
-db.drop_table([Person])
+db.drop_tables([Person])
 db.create_tables([Person])
 # obvious connecting to db getting rid of old data and adding new
 
