@@ -34,6 +34,7 @@ db.create_tables([Person])
 Person(name='Raul', birthday=date(1990, 1, 1), age=1000).save()
 Person(name='Chris', birthday=date(1985, 5, 10), age=1000).save()
 Person(name='Mega Hawk', birthday=date(1980, 12, 25), age=9999).save()
+#seeding database tables
 
 
 app = Flask(__name__)
@@ -45,5 +46,19 @@ def index():
     return "Hello World"
 # testing to see if server is running before I start
 
+@app.route('/person/' methods=['GET', 'POST'])
+@app.route('/person/' methods=['GET', 'PUT', "DELETE"])
+#setting up routes and slugs also what  HTTP VERB each route has access to
+def endpoint(id=None):#set id to none by defualt so that the first router isnt stuck looking for it
+    if request.method == 'GET':
+        if id:# if the get request has an id obvoiusly do the below
+            return jsonify(model_to_dict(Person.get(Person.id == id))) #basically if person has an id return that data in a json format and searching the person dict for the id key
+    else: #if no id for get give me an empty list/array and fill it with the information from the person table
+        people_list = []
+        for people in Person.select():
+            people_list.append(model_to_dict(people))
+        return jsonify(people_list)#select is from peewee its like if we did SELECT * FROM person but with the orm rather than the sql file or cli tool with a for loop obviously
+
 
 app.run(debug=True)
+#must always be last line
