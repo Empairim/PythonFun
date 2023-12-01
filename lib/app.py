@@ -57,7 +57,18 @@ def endpoint(id=None):#set id to none by defualt so that the first router isnt s
         people_list = []
         for people in Person.select():
             people_list.append(model_to_dict(people))
-        return jsonify(people_list)#select is from peewee its like if we did SELECT * FROM person but with the orm rather than the sql file or cli tool with a for loop obviously
+        return jsonify(people_list)#select is from peewee its like if we did SELECT * FROM person but with the orm rather than the sql file or cli tool with a for loop obviously then return that array of json data
+    if request.method == 'PUT':
+        body = request.get_json()# It is used to extract JSON data from the request body in Flask. and we're naming it body because it makes sense to
+        Person.update(body).where(Person.id == id).execute()
+        return "Person" + str(id) + "has been updated"
+    if request.method == 'POST':
+        new_person = dict_to_model(Person, request.get_json())
+        new_person.save()
+        return jsonify({"Success: True"})
+    if request.method == 'DELETE':
+        Person.delete().where(Person.id == id).execute()
+        return "Person " + str(id) + " deleted."
 
 
 app.run(debug=True)
