@@ -55,12 +55,12 @@ def endpoint(id=None):  # set id to none by defualt so that the first router isn
         if id:  # if the get request has an id obvoiusly do the below
             # basically if person has an id return that data in a json format and searching the person dict for the id key
             return jsonify(model_to_dict(Person.get(Person.id == id)))
-    else:  # if no id for get give me an empty list/array and fill it with the information from the person table
-        people_list = []
-        for people in Person.select():
-            people_list.append(model_to_dict(people))
+        else:  # if no id for get give me an empty list/array and fill it with the information from the person table
+            people_list = []
+            for people in Person.select():
+                people_list.append(model_to_dict(people))
         # select is from peewee its like if we did SELECT * FROM person but with the orm rather than the sql file or cli tool with a for loop obviously then return that array of json data
-        return jsonify(people_list)
+            return jsonify(people_list)
     if request.method == 'PUT':
         # It is used to extract JSON data from the request body in Flask. and we're naming it body because it makes sense to
         body = request.get_json()
